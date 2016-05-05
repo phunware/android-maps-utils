@@ -5,6 +5,8 @@ dependencies {
     // Or, fetch from Maven:
     // compile 'com.google.maps.android:android-maps-utils:0.3+'
     compile 'com.google.android.gms:play-services-maps:8.4.0'
+    compile 'com.squareup.picasso:picasso:2.3.4'
+
 }
 
 android {

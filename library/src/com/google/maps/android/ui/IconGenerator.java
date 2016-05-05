@@ -50,14 +50,14 @@ public class IconGenerator {
 
     private float mAnchorU = 0.5f;
     private float mAnchorV = 1f;
-    private BubbleDrawable mBackground;
+//    private BubbleDrawable mBackground;
 
     /**
      * Creates a new IconGenerator with the default style.
      */
     public IconGenerator(Context context) {
         mContext = context;
-        mBackground = new BubbleDrawable(mContext.getResources());
+//        mBackground = new BubbleDrawable(mContext.getResources());
         mContainer = (ViewGroup) LayoutInflater.from(mContext).inflate(R.layout.amu_text_bubble, null);
         mRotationLayout = (RotationLayout) mContainer.getChildAt(0);
         mContentView = mTextView = (TextView) mRotationLayout.findViewById(R.id.amu_text);
@@ -121,7 +121,7 @@ public class IconGenerator {
      * Sets the child view for the icon.
      * <p/>
      * If the view contains a {@link TextView} with the id "text", operations such as {@link
-     * #setTextAppearance} and {@link #makeIcon(String)} will operate upon that {@link TextView}.
+     * #setTextAppearance} and {@link #makeIcon()} will operate upon that {@link TextView}.
      */
     public void setContentView(View contentView) {
         mRotationLayout.removeAllViews();
@@ -217,8 +217,8 @@ public class IconGenerator {
      * @param color the color for the background tint.
      */
     public void setColor(int color) {
-        mBackground.setColor(color);
-        setBackground(mBackground);
+//        mBackground.setColor(color);
+//        setBackground(mBackground);
     }
 
     /**

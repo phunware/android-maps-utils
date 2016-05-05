@@ -16,15 +16,20 @@
 
 package com.google.maps.android.utils.demo;
 
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.text.SpannableStringBuilder;
 import android.text.style.StyleSpan;
+import android.widget.ImageView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.maps.android.ui.IconGenerator;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import static android.graphics.Typeface.BOLD;
 import static android.graphics.Typeface.ITALIC;
@@ -36,7 +41,7 @@ public class IconGeneratorDemoActivity extends BaseDemoActivity {
     protected void startDemo() {
         getMap().moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(-33.8696, 151.2094), 10));
 
-        IconGenerator iconFactory = new IconGenerator(this);
+        final IconGenerator iconFactory = new IconGenerator(this);
         addIcon(iconFactory, "Default", new LatLng(-33.8696, 151.2094));
 
         iconFactory.setColor(Color.CYAN);
@@ -59,6 +64,36 @@ public class IconGeneratorDemoActivity extends BaseDemoActivity {
         iconFactory.setContentRotation(0);
         iconFactory.setStyle(IconGenerator.STYLE_ORANGE);
         addIcon(iconFactory, makeCharSequence(), new LatLng(-33.77720, 151.12412));
+
+        final ImageView imageView = (ImageView)getLayoutInflater().inflate(R.layout.custom_map_con, null);
+//        iconFactory.setContentView(imageView);
+
+        Target target = new Target() {
+            @Override
+            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                imageView.setImageBitmap(bitmap);
+                iconFactory.setContentView(imageView);
+                addIcon(iconFactory, "", new LatLng(-33.77620, 150.12412));
+            }
+
+            @Override
+            public void onBitmapFailed(Drawable errorDrawable) {
+                imageView.setImageDrawable(errorDrawable);
+            }
+
+            @Override
+            public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+            }
+        };
+
+        Picasso.with(this)
+                .load("http://dwtd9qkskt5ds.cloudfront.net/blog/wp-content/uploads/2012/02/ic_map_marker_selected.9.png")
+                .placeholder(android.R.drawable.ic_delete)
+                .into(target);
+
+
+
     }
 
     private void addIcon(IconGenerator iconFactory, CharSequence text, LatLng position) {
